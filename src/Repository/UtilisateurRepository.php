@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Utilisateur;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * @method Utilisateur|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,6 +20,24 @@ class UtilisateurRepository extends ServiceEntityRepository
         parent::__construct($registry, Utilisateur::class);
     }
 
+    /**
+     * Permet de retourner les teléphones avec une pagination
+     *
+     * @param int $page
+     * @param int $limit
+     * @return Paginator
+     */
+    public function findAllByPage(int $page,int $limit){
+
+        $query = $this->createQueryBuilder('u')
+            ->orderBy('u.id', 'DESC')
+            ->getQuery()
+            ->setFirstResult(($page -1)*$limit)
+            ->setMaxResults($limit);
+
+        return new Paginator($query);
+
+    }
     // /**
     //  * @return Utilisateur[] Returns an array of Utilisateur objects
     //  */

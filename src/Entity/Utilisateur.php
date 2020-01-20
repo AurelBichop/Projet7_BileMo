@@ -3,9 +3,13 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UtilisateurRepository")
+ * @UniqueEntity(fields={"email"},message="Cet utilisateur existe déja")
  */
 class Utilisateur
 {
@@ -13,31 +17,49 @@ class Utilisateur
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"liste:utilisateur","detail:utilisateur"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"liste:utilisateur","detail:utilisateur"})
+     * @Assert\NotBlank()
+     * @Assert\Length(min="2", max="255")
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"liste:utilisateur","detail:utilisateur"})
+     * @Assert\NotBlank()
+     * @Assert\Length(min="2", max="255")
      */
     private $prenom;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("detail:utilisateur")
+     * @Assert\NotBlank()
+     * @Assert\Length(min="2", max="255")
      */
     private $tel;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("detail:utilisateur")
+     * @Assert\NotBlank()
+     * @Assert\Length(min="2", max="255")
      */
     private $adresse;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("detail:utilisateur")
+     * @Assert\NotBlank()
+     * @Assert\Email(
+     *     message="L'email n'est pas un email valide"
+     * )
      */
     private $email;
 
