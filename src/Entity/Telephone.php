@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TelephoneRepository")
@@ -13,46 +14,55 @@ class Telephone
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"liste:tel","detail:tel"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("detail:tel")
      */
     private $os;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"liste:tel","detail:tel"})
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("detail:tel")
      */
     private $coloris;
 
     /**
      * @ORM\Column(type="date")
+     * @Groups("detail:tel")
      */
     private $dateSortie;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("detail:tel")
      */
     private $memoire;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("detail:tel")
      */
     private $tailleEcran;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("detail:tel")
      */
     private $photo;
 
     /**
      * @ORM\Column(type="float")
+     * @Groups({"liste:tel","detail:tel"})
      */
     private $prix;
 
