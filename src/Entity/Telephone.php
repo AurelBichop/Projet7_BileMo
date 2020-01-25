@@ -26,7 +26,7 @@ class Telephone
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"liste:tel","detail:tel"})
+     * @Groups({"liste:tel","detail:tel","detail:marque"})
      */
     private $nom;
 
@@ -67,9 +67,16 @@ class Telephone
     private $prix;
 
     /**
+     * @Groups({"liste:tel"})
+     */
+    private $details;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Marque", inversedBy="telephones")
+     * @Groups({"liste:tel","detail:tel"})
      */
     private $marque;
+
 
     public function getId(): ?int
     {
@@ -182,5 +189,12 @@ class Telephone
         $this->marque = $marque;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDetails(){
+        return '/api/telephones/show/'.$this->id;
     }
 }

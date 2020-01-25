@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Marque;
 use App\Entity\Telephone;
 use App\Repository\TelephoneRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -39,5 +40,16 @@ class TelephoneController extends AbstractController
     public function show(Telephone $telephone){
 
         return $this->json($telephone,200,[],['groups'=>'detail:tel']);
+    }
+
+
+    /**
+     * @Route("/api/marque/show/{id}", name="show_marque", methods={"GET"})
+     * @param Marque $marque
+     * @return JsonResponse
+     */
+    public function showMarque(Marque $marque){
+
+        return $this->json($marque,200,[],['groups'=>'detail:marque']);
     }
 }
