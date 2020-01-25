@@ -97,6 +97,8 @@ class UtilisateurController extends AbstractController
 
     /**
      * @Route("/api/utilisateurs/{id}", name="update_utilisateur", methods={"PUT"})
+     * @Security("is_granted('ROLE_USER') and user === utilisateur.getClient()")
+     *
      * @param Utilisateur $utilisateur
      * @param Request $request
      * @param SerializerInterface $serializer
@@ -136,6 +138,8 @@ class UtilisateurController extends AbstractController
 
     /**
      * @Route("/api/utilisateurs/{id}", name="delete_utilisateur", methods={"DELETE"})
+     * @Security("is_granted('ROLE_USER') and user === utilisateur.getClient()")
+     *
      * @param Utilisateur $utilisateur
      * @param EntityManagerInterface $entityManager
      * @return Response
