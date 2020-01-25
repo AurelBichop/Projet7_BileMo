@@ -7,23 +7,30 @@ namespace App\Controller;
 use App\Entity\Utilisateur;
 use App\Repository\UtilisateurRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class UtilisateurController extends AbstractController
 {
     /**
+     * Permet de lister et paginer les utilisateurs lié à un client connecté
+     *
      * @Route("/api/utilisateurs/{page<\d+>?1}", name="liste_utilisateur", methods={"GET"})
+     * @Security("is_granted('ROLE_USER')")
+     *
      * @param Request $request
      * @param UtilisateurRepository $repository
+     * @param TokenStorageInterface $token
      * @return JsonResponse
      */
-    public function liste(Request $request, UtilisateurRepository $repository)
+    public function liste(Request $request, UtilisateurRepository $repository, TokenStorageInterface $token)
     {
         $page = $request->get('page');
 
@@ -33,12 +40,17 @@ class UtilisateurController extends AbstractController
 
         $limit = 20;
 
-        $listeTel = $repository->findAllByPage($page, $limit);
+        //recupere l'id du client
+        $idClient = $token->getToken()->getUser()->getId();
+
+        $listeTel = $repository->findAllByPageByClient($page, $limit, $idClient);
         return $this->json($listeTel,200,[],['groups'=>'liste:utilisateur']);
     }
 
     /**
      * @Route("/api/utilisateurs/show/{id}", name="show_utilisateur", methods={"GET"})
+     * @Security("is_granted('ROLE_USER') and user === utilisateur.getClient()")
+     *
      * @param Utilisateur $utilisateur
      * @return JsonResponse
      */
@@ -48,13 +60,14 @@ class UtilisateurController extends AbstractController
     }
 
     /**
- * @Route("/api/utilisateurs", name="add_utilisateur", methods={"POST"})
- * @param Request $request
- * @param SerializerInterface $serializer
- * @param ValidatorInterface $validator
- * @param EntityManagerInterface $manager
- * @return Response|JsonResponse
- */
+     * @Route("/api/utilisateurs", name="add_utilisateur", methods={"POST"})
+     *
+     * @param Request $request
+     * @param SerializerInterface $serializer
+     * @param ValidatorInterface $validator
+     * @param EntityManagerInterface $manager
+     * @return Response|JsonResponse
+     */
     public function add(Request $request, SerializerInterface $serializer, ValidatorInterface $validator,EntityManagerInterface $manager){
         $utilisateur = $serializer->deserialize($request->getContent(), Utilisateur::class, 'json');
 

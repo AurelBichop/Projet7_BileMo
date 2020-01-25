@@ -25,11 +25,14 @@ class UtilisateurRepository extends ServiceEntityRepository
      *
      * @param int $page
      * @param int $limit
+     * @param int $idClient
      * @return Paginator
      */
-    public function findAllByPage(int $page,int $limit){
+    public function findAllByPageByClient(int $page,int $limit, int $idClient){
 
         $query = $this->createQueryBuilder('u')
+            ->andWhere('u.client = :idClient')
+            ->setParameter('idClient', $idClient)
             ->orderBy('u.id', 'DESC')
             ->getQuery()
             ->setFirstResult(($page -1)*$limit)
