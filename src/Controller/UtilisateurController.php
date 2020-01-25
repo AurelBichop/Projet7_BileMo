@@ -32,13 +32,13 @@ class UtilisateurController extends AbstractController
      */
     public function liste(Request $request, UtilisateurRepository $repository, TokenStorageInterface $token)
     {
+        // Gestion de la pagination ::::::::
         $page = $request->get('page');
-
         if($page === null || $page <1){
             $page = 1;
         }
-
         $limit = 20;
+        //:::::::::::::::::::::::::::::::::::
 
         //recupere l'id du client
         $idClient = $token->getToken()->getUser()->getId();
@@ -63,14 +63,20 @@ class UtilisateurController extends AbstractController
      * @Route("/api/utilisateurs", name="add_utilisateur", methods={"POST"})
      *
      * @param Request $request
+     * @param TokenStorageInterface $token
      * @param SerializerInterface $serializer
      * @param ValidatorInterface $validator
      * @param EntityManagerInterface $manager
      * @return Response|JsonResponse
      */
-    public function add(Request $request, SerializerInterface $serializer, ValidatorInterface $validator,EntityManagerInterface $manager){
+    public function add(Request $request, TokenStorageInterface $token, SerializerInterface $serializer, ValidatorInterface $validator,EntityManagerInterface $manager){
+        //recupere le client
+        $client = $token->getToken()->getUser();
+        //récupération des informations et desiarilisation
         $utilisateur = $serializer->deserialize($request->getContent(), Utilisateur::class, 'json');
+        $utilisateur->setClient($client);
 
+        //gestion des erreurs de validations
         $erreurs = $validator->validate($utilisateur);
 
         if(count($erreurs)){
