@@ -42,6 +42,11 @@ class TelephoneController extends AbstractController
      *     response=200,
      *     description="Retourne une liste des telephones",
      * )
+     * @SWG\Response(
+     *     response="401",
+     *     description="Token jwt expiré ou invalide"
+     * )
+     *
      * @param Request $request
      * @param TelephoneRepository $repository
      * @return JsonResponse
@@ -70,6 +75,10 @@ class TelephoneController extends AbstractController
      *     @Model(type=Telephone::class, groups={"detail:tel"})
      *     )
      * )
+     * @SWG\Response(
+     *     response="401",
+     *     description="Token jwt expiré ou invalide"
+     * )
      *
      * @param Telephone $telephone
      * @return JsonResponse
@@ -89,6 +98,11 @@ class TelephoneController extends AbstractController
      *     response=200,
      *     description="Retourne le détail de la marque ainsi que les téléphones lui correspondant",
      * )
+     * @SWG\Response(
+     *     response="401",
+     *     description="Token jwt expiré ou invalide"
+     * )
+     *
      * @SWG\Tag(name="Marques Telephone")
      *
      * @param Marque $marque

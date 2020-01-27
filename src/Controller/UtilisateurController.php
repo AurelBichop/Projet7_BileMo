@@ -8,7 +8,6 @@ use App\Entity\Utilisateur;
 use App\Repository\UtilisateurRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
-use Nelmio\ApiDocBundle\Annotation\Operation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -49,6 +48,10 @@ class UtilisateurController extends AbstractController
      *     response=200,
      *     description="Retourne une liste des Utilisateurs",
      *     )
+     * @SWG\Response(
+     *     response="401",
+     *     description="Token jwt expiré ou invalide"
+     * )
      *
      * @param Request $request
      * @param UtilisateurRepository $repository
@@ -82,6 +85,10 @@ class UtilisateurController extends AbstractController
      *     response=200,
      *     description="Retourne le detail d'un Utilisateurs",
      *     )
+     * @SWG\Response(
+     *     response="401",
+     *     description="Token jwt expiré ou invalide"
+     * )
      *
      * @param Utilisateur $utilisateur
      * @return JsonResponse
@@ -110,9 +117,14 @@ class UtilisateurController extends AbstractController
      *     description="Ajout d'un Utilisateurs",
      *     )
      * @SWG\Response(
+     *     response="401",
+     *     description="Token jwt expiré ou invalide"
+     * )
+     * @SWG\Response(
      *     response="409",
      *     description="Erreur pour la création de l'utilisateur"
      * )
+     *
      *
      *
      * @param Request $request
@@ -158,6 +170,10 @@ class UtilisateurController extends AbstractController
      *     response=200,
      *     description="Mise à jour d'un Utilisateurs",
      *     )
+     * @SWG\Response(
+     *     response="401",
+     *     description="Token jwt expiré ou invalide"
+     * )
      * @SWG\Response(
      *     response=409,
      *     description="Erreur pour la mise à jour",
@@ -220,6 +236,10 @@ class UtilisateurController extends AbstractController
      *     response=204,
      *     description="Suppression de  l'utilisateur",
      *     )
+     * @SWG\Response(
+     *     response="401",
+     *     description="Token jwt expiré ou invalide"
+     * )
      *
      * @param Utilisateur $utilisateur
      * @param EntityManagerInterface $entityManager
