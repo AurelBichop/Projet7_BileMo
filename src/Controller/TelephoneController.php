@@ -14,23 +14,34 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+
+/**
+ *
+ * Class TelephoneController
+ *
+ * @SWG\Tag(name="Telephones")
+ * @Security(name="Bearer")
+ *
+ * @package App\Controller
+ */
 class TelephoneController extends AbstractController
 {
     /**
      * Retourne une liste des telephones
      *
      * @Route("/api/telephones/{page<\d+>?1}", name="liste_telephone", methods={"GET"})
+     * @SWG\Parameter(
+     *     name="page",
+     *     in="path",
+     *     required=false,
+     *     default="1",
+     *     type="integer",
+     *     description="Numero de page"
+     * )
      * @SWG\Response(
      *     response=200,
      *     description="Retourne une liste des telephones",
-     *     @SWG\Schema(
-     *         type="array",
-     *         @SWG\Items(ref=@Model(type=Telephone::class, groups={"liste:tel"}))
-     *     )
      * )
-     * @SWG\Tag(name="Telephones")
-     * @Security(name="Bearer")
-     *
      * @param Request $request
      * @param TelephoneRepository $repository
      * @return JsonResponse
@@ -56,13 +67,9 @@ class TelephoneController extends AbstractController
      * @SWG\Response(
      *     response=200,
      *     description="Retourne le détail d'un téléphone",
-     *     @SWG\Schema(
-     *         type="array",
-     *         @SWG\Items(ref=@Model(type=Telephone::class, groups={"detail:tel"}))
+     *     @Model(type=Telephone::class, groups={"detail:tel"})
      *     )
      * )
-     * @SWG\Tag(name="Telephones")
-     * @Security(name="Bearer")
      *
      * @param Telephone $telephone
      * @return JsonResponse
@@ -81,14 +88,9 @@ class TelephoneController extends AbstractController
      * @SWG\Response(
      *     response=200,
      *     description="Retourne le détail de la marque ainsi que les téléphones lui correspondant",
-     *     @SWG\Schema(
-     *         type="array",
-     *         @SWG\Items(ref=@Model(type=Marque::class, groups={"detail:marque"}))
-     *     )
      * )
-     * @SWG\Tag(name="Marques")
+     * @SWG\Tag(name="Marques Telephone")
      *
-     * @Security(name="Bearer")
      * @param Marque $marque
      * @return JsonResponse
      */

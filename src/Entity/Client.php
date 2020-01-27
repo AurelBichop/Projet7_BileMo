@@ -44,6 +44,8 @@ class Client implements UserInterface
      */
     private $utilisateurs;
 
+
+
     public function __construct()
     {
         $this->utilisateurs = new ArrayCollection();
@@ -134,7 +136,7 @@ class Client implements UserInterface
     }
 
     /**
-     * @inheritDoc
+     * @return array|string[]
      */
     public function getRoles()
     {
@@ -142,7 +144,7 @@ class Client implements UserInterface
     }
 
     /**
-     * @inheritDoc
+     * @return string|null
      */
     public function getSalt()
     {
@@ -150,7 +152,7 @@ class Client implements UserInterface
     }
 
     /**
-     * @inheritDoc
+     * @return string
      */
     public function getUsername()
     {
@@ -158,7 +160,7 @@ class Client implements UserInterface
     }
 
     /**
-     * @inheritDoc
+     * @return null
      */
     public function eraseCredentials()
     {

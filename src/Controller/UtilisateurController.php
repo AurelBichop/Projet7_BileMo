@@ -7,6 +7,8 @@ namespace App\Controller;
 use App\Entity\Utilisateur;
 use App\Repository\UtilisateurRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Annotation\Operation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -16,7 +18,16 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Nelmio\ApiDocBundle\Annotation\Security as NelmioSecurity;
+use Swagger\Annotations as SWG;
 
+/**
+ * Class UtilisateurController
+ *
+ * @SWG\Tag(name="Utilisateurs")
+ * @NelmioSecurity(name="Bearer")
+ * @package App\Controller
+ */
 class UtilisateurController extends AbstractController
 {
     /**
@@ -24,6 +35,20 @@ class UtilisateurController extends AbstractController
      *
      * @Route("/api/utilisateurs/{page<\d+>?1}", name="liste_utilisateur", methods={"GET"})
      * @Security("is_granted('ROLE_USER')")
+     *
+     * @SWG\Parameter(
+     *     name="page",
+     *     in="path",
+     *     required=false,
+     *     default="1",
+     *     type="integer",
+     *     description="Numero de page"
+     * )
+     *
+     * @SWG\Response(
+     *     response=200,
+     *     description="Retourne une liste des Utilisateurs",
+     *     )
      *
      * @param Request $request
      * @param UtilisateurRepository $repository
@@ -53,6 +78,11 @@ class UtilisateurController extends AbstractController
      * @Route("/api/utilisateurs/show/{id}", name="show_utilisateur", methods={"GET"})
      * @Security("is_granted('ROLE_USER') and user === utilisateur.getClient()")
      *
+     * @SWG\Response(
+     *     response=200,
+     *     description="Retourne le detail d'un Utilisateurs",
+     *     )
+     *
      * @param Utilisateur $utilisateur
      * @return JsonResponse
      */
@@ -65,6 +95,25 @@ class UtilisateurController extends AbstractController
      * Ajout d'un nouvelle utilisateur
      *
      * @Route("/api/utilisateurs", name="add_utilisateur", methods={"POST"})
+     *
+     * @SWG\Parameter(
+     *     name="Création d'un utlisateur",
+     *     required=true,
+     *     in="body",
+     *     type="string",
+     *     description="Permet l'ajout d'un utilisateur",
+     *     @Model(type=Utilisateur::class,groups={"docPost:utilisateur"})
+     *
+     * )
+     * @SWG\Response(
+     *     response=201,
+     *     description="Ajout d'un Utilisateurs",
+     *     )
+     * @SWG\Response(
+     *     response="409",
+     *     description="Erreur pour la création de l'utilisateur"
+     * )
+     *
      *
      * @param Request $request
      * @param TokenStorageInterface $token
@@ -104,6 +153,25 @@ class UtilisateurController extends AbstractController
      *
      * @Route("/api/utilisateurs/{id}", name="update_utilisateur", methods={"PUT"})
      * @Security("is_granted('ROLE_USER') and user === utilisateur.getClient()")
+
+     * @SWG\Response(
+     *     response=200,
+     *     description="Mise à jour d'un Utilisateurs",
+     *     )
+     * @SWG\Response(
+     *     response=409,
+     *     description="Erreur pour la mise à jour",
+     *     )
+     *
+     * @SWG\Parameter(
+     *     name="Mise à Jour d'un utlisateur",
+     *     required=true,
+     *     in="body",
+     *     type="string",
+     *     description="Permet la mise à jour d'un utilisateur d'un utilisateur",
+     *     @Model(type=Utilisateur::class,groups={"docPost:utilisateur"})
+     *)
+     *
      *
      * @param Utilisateur $utilisateur
      * @param Request $request
@@ -147,6 +215,11 @@ class UtilisateurController extends AbstractController
      *
      * @Route("/api/utilisateurs/{id}", name="delete_utilisateur", methods={"DELETE"})
      * @Security("is_granted('ROLE_USER') and user === utilisateur.getClient()")
+     *
+     * @SWG\Response(
+     *     response=204,
+     *     description="Suppression de  l'utilisateur",
+     *     )
      *
      * @param Utilisateur $utilisateur
      * @param EntityManagerInterface $entityManager

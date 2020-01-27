@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Swagger\Annotations as SWG;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TelephoneRepository")
@@ -15,6 +16,7 @@ class Telephone
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      * @Groups({"liste:tel","detail:tel"})
+     * @SWG\Property(description="The unique identifier of the user.")
      */
     private $id;
 

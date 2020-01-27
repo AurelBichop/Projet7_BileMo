@@ -23,7 +23,7 @@ class Utilisateur
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"liste:utilisateur","detail:utilisateur"})
+     * @Groups({"liste:utilisateur","detail:utilisateur","docPost:utilisateur"})
      * @Assert\NotBlank()
      * @Assert\Length(min="2", max="255")
      */
@@ -31,7 +31,7 @@ class Utilisateur
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"liste:utilisateur","detail:utilisateur"})
+     * @Groups({"liste:utilisateur","detail:utilisateur","docPost:utilisateur"})
      * @Assert\NotBlank()
      * @Assert\Length(min="2", max="255")
      */
@@ -39,7 +39,7 @@ class Utilisateur
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups("detail:utilisateur")
+     * @Groups({"detail:utilisateur","docPost:utilisateur"})
      * @Assert\NotBlank()
      * @Assert\Length(min="2", max="255")
      */
@@ -47,7 +47,7 @@ class Utilisateur
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups("detail:utilisateur")
+     * @Groups({"detail:utilisateur","docPost:utilisateur"})
      * @Assert\NotBlank()
      * @Assert\Length(min="2", max="255")
      */
@@ -55,7 +55,7 @@ class Utilisateur
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups("detail:utilisateur")
+     * @Groups({"detail:utilisateur","docPost:utilisateur"})
      * @Assert\NotBlank()
      * @Assert\Email(
      *     message="L'email n'est pas un email valide"
@@ -67,6 +67,19 @@ class Utilisateur
      * @ORM\ManyToOne(targetEntity="App\Entity\Client", inversedBy="utilisateurs")
      */
     private $client;
+
+    /**
+     * @Groups({"liste:utilisateur"})
+     * @var string
+     */
+    private $details;
+
+    /**
+     * @Groups({"detail:utilisateur"})
+     * @var string
+     */
+    private $manage;
+
 
     public function getId(): ?int
     {
@@ -144,4 +157,21 @@ class Utilisateur
 
         return $this;
     }
+
+    /**
+     * Lien pour le detail de l'utilisateur
+     * @return string
+     */
+    public function getDetails(){
+        return '/api/utilisateurs/show/'.$this->id;
+    }
+
+    /**
+     * Lien pour la mise à jour ou suppression
+     * @return string
+     */
+    public function getManage(){
+        return '/api/utilisateurs/'.$this->id;
+    }
+
 }
