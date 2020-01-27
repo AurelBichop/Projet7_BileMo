@@ -68,6 +68,7 @@ class Telephone
 
     /**
      * @Groups({"liste:tel"})
+     * @var string
      */
     private $details;
 

@@ -34,6 +34,7 @@ class Marque
 
     /**
      * @Groups({"liste:tel","detail:tel"})
+     * @var string
      */
     private $lien_marque;
 

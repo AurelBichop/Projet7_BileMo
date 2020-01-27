@@ -20,7 +20,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class UtilisateurController extends AbstractController
 {
     /**
-     * Permet de lister et paginer les utilisateurs lié à un client connecté
+     * Permet de lister et paginer ses utilisateurs
      *
      * @Route("/api/utilisateurs/{page<\d+>?1}", name="liste_utilisateur", methods={"GET"})
      * @Security("is_granted('ROLE_USER')")
@@ -42,12 +42,14 @@ class UtilisateurController extends AbstractController
 
         //recupere l'id du client
         $idClient = $token->getToken()->getUser()->getId();
+        $listeUtilisateur = $repository->findAllByPageByClient($page, $limit, $idClient);
 
-        $listeTel = $repository->findAllByPageByClient($page, $limit, $idClient);
-        return $this->json($listeTel,Response::HTTP_OK,[],['groups'=>'liste:utilisateur']);
+        return $this->json($listeUtilisateur,Response::HTTP_OK,[],['groups'=>'liste:utilisateur']);
     }
 
     /**
+     * Permet de voir les details d'un utilisateurs
+     *
      * @Route("/api/utilisateurs/show/{id}", name="show_utilisateur", methods={"GET"})
      * @Security("is_granted('ROLE_USER') and user === utilisateur.getClient()")
      *
@@ -60,6 +62,8 @@ class UtilisateurController extends AbstractController
     }
 
     /**
+     * Ajout d'un nouvelle utilisateur
+     *
      * @Route("/api/utilisateurs", name="add_utilisateur", methods={"POST"})
      *
      * @param Request $request
@@ -96,6 +100,8 @@ class UtilisateurController extends AbstractController
 
 
     /**
+     * Mise à jour d'un utilisateur
+     *
      * @Route("/api/utilisateurs/{id}", name="update_utilisateur", methods={"PUT"})
      * @Security("is_granted('ROLE_USER') and user === utilisateur.getClient()")
      *
@@ -137,6 +143,8 @@ class UtilisateurController extends AbstractController
     }
 
     /**
+     * Suppression d'un utilisateur
+     *
      * @Route("/api/utilisateurs/{id}", name="delete_utilisateur", methods={"DELETE"})
      * @Security("is_granted('ROLE_USER') and user === utilisateur.getClient()")
      *
