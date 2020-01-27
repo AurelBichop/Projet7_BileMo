@@ -44,7 +44,7 @@ class UtilisateurController extends AbstractController
         $idClient = $token->getToken()->getUser()->getId();
 
         $listeTel = $repository->findAllByPageByClient($page, $limit, $idClient);
-        return $this->json($listeTel,200,[],['groups'=>'liste:utilisateur']);
+        return $this->json($listeTel,Response::HTTP_OK,[],['groups'=>'liste:utilisateur']);
     }
 
     /**
@@ -56,7 +56,7 @@ class UtilisateurController extends AbstractController
      */
     public function show(Utilisateur $utilisateur){
 
-        return $this->json($utilisateur,200,[],['groups'=>'detail:utilisateur']);
+        return $this->json($utilisateur,Response::HTTP_OK,[],['groups'=>'detail:utilisateur']);
     }
 
     /**
@@ -80,7 +80,7 @@ class UtilisateurController extends AbstractController
         $erreurs = $validator->validate($utilisateur);
 
         if(count($erreurs)){
-            return new Response($erreurs,500, [
+            return new Response($erreurs,Response::HTTP_CONFLICT, [
                 'Content-type' => 'application/json'
             ]);
         }
@@ -91,7 +91,7 @@ class UtilisateurController extends AbstractController
         return new JsonResponse([
             "status" => 201,
             "message" => "l'utilisateur à bien été crée"
-        ],201);
+        ],Response::HTTP_CREATED);
     }
 
 
@@ -123,7 +123,7 @@ class UtilisateurController extends AbstractController
         $erreurs = $validator->validate($utilisateurUpdate);
         if(count($erreurs)){
             $erreurs = $serializer->serialize($erreurs,'json');
-            return new Response($erreurs,500, [
+            return new Response($erreurs,Response::HTTP_CONFLICT, [
                 'Content-type' => 'application/json'
             ]);
         }
@@ -133,7 +133,7 @@ class UtilisateurController extends AbstractController
         return new JsonResponse([
             "status" => 200,
             "message" => "l'utilisateur à bien été mis à jour"
-        ],202);
+        ],Response::HTTP_OK);
     }
 
     /**
@@ -148,6 +148,6 @@ class UtilisateurController extends AbstractController
     {
         $entityManager->remove($utilisateur);
         $entityManager->flush();
-        return new Response(null, 204);
+        return new Response(null, Response::HTTP_NO_CONTENT);
     }
 }

@@ -8,6 +8,7 @@ use App\Repository\TelephoneRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class TelephoneController extends AbstractController
@@ -29,7 +30,7 @@ class TelephoneController extends AbstractController
         $limit = 20;
 
         $listeTel = $repository->findAllByPage($page, $limit);
-        return $this->json($listeTel,200,[],['groups'=>'liste:tel']);
+        return $this->json($listeTel,Response::HTTP_OK,[],['groups'=>'liste:tel']);
     }
 
     /**
@@ -39,7 +40,7 @@ class TelephoneController extends AbstractController
      */
     public function show(Telephone $telephone){
 
-        return $this->json($telephone,200,[],['groups'=>'detail:tel']);
+        return $this->json($telephone,Response::HTTP_OK,[],['groups'=>'detail:tel']);
     }
 
 
@@ -50,6 +51,6 @@ class TelephoneController extends AbstractController
      */
     public function showMarque(Marque $marque){
 
-        return $this->json($marque,200,[],['groups'=>'detail:marque']);
+        return $this->json($marque,Response::HTTP_OK,[],['groups'=>'detail:marque']);
     }
 }
