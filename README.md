@@ -1,0 +1,2 @@
+# Projet7_BileMo
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/426dd56dd404481080a51e926abe35d6)](https://app.codacy.com/manual/AurelBichop/Projet7_BileMo?utm_source=github.com&utm_medium=referral&utm_content=AurelBichop/Projet7_BileMo&utm_campaign=Badge_Grade_Settings)
