@@ -11,7 +11,7 @@ Le projet est actuellement en phase de test.
 
 Installer tous les fichiers sur le serveur en utilisant la commande :
 
-# git clone https://github.com/AurelBichop/Projet7_BileMo.git
+#### git clone https://github.com/AurelBichop/Projet7_BileMo.git
 
 ### Configuration de l'application ###
 Renseigner la base de données dans le fichier .env
@@ -20,19 +20,19 @@ Renseigner la base de données dans le fichier .env
 Creer le repertoire jwt dans /config.
 
 Créer la clef privé avec la commande
-# openssl genrsa -out config/jwt/private.pem -aes256 4096
+#### openssl genrsa -out config/jwt/private.pem -aes256 4096
 
 Renseigner le JWT_PASSPHRASE(que vous avez fourni au moment de la génération de la clef privé) dans le .env 
 
 Créer la clef public avec la commande 
-# openssl rsa -pubout -in config/jwt/private.pem -out config/jwt/public.pem
+#### openssl rsa -pubout -in config/jwt/private.pem -out config/jwt/public.pem
 
 
-### Mise en place des migrations###
-php bin/console d:m:m
+### Mise en place des migrations ###
+#### php bin/console d:m:m
 
 ### Mise en place des fixtures ###
-php bin/console d:f:l
+#### php bin/console d:f:l
 
 ### Pour un hébergement avec OVH ###
 Ajouter un .htaccess dans public/
