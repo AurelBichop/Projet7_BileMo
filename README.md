@@ -29,15 +29,16 @@ Créer la clef public avec la commande
 
 
 ### Mise en place des migrations ###
-**php bin/console d:m:m**
+**php bin/console doctrine:migrations:migrate**
 
 ### Mise en place des fixtures ###
-**php bin/console d:f:l**
+**php bin/console doctrine:fixtures:load**
 
 ### Pour un hébergement avec OVH ###
 Ajouter un .htaccess dans public/
 
-````===================================================
+```
+===================================================
 
 SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
 
@@ -46,6 +47,7 @@ RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^(.*)$ index.php [QSA,L]
 
-==================================================```
+==================================================
+```
 
 Technologie utilisée : Symfony 5, MYSQL v.5.6 ou MariaDB-10.4.6, langage PHP 7.2
