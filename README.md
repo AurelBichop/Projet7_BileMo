@@ -34,6 +34,10 @@ Créer la clef public avec la commande
 ### Mise en place des fixtures ###
 **php bin/console doctrine:fixtures:load**
 
+### Pour tester les Api avec un Client d'exemple: ### 
+- récuperer son courriel dans la table Client
+- le mot de passe est *password*
+
 ### Les Bundles utilisés pour cette application ###
     Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle
     Nelmio\ApiDocBundle\NelmioApiDocBundle
